@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savory Delights - Gourmet Food Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Shadcn-inspired dark color palette */
+            --background: 0 0% 3.9%;
+            --foreground: 0 0% 98%;
+            --card: 0 0% 3.9%;
+            --card-foreground: 0 0% 98%;
+            --primary: 0 0% 98%;
+            --primary-foreground: 0 0% 9%;
+            --secondary: 0 0% 14.9%;
+            --secondary-foreground: 0 0% 98%;
+            --muted: 0 0% 14.9%;
+            --muted-foreground: 0 0% 63.9%;
+            --accent: 0 0% 14.9%;
+            --accent-foreground: 0 0% 98%;
+            --border: 0 0% 14.9%;
+            --ring: 0 0% 83.1%;
+            
+            /* Food-themed accents */
+            --orange-accent: 25 95% 60%;
+            --green-accent: 142 76% 36%;
+            --yellow-accent: 48 96% 53%;
+            --red-accent: 0 84% 60%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(0 0% 7%) 100%);
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid hsl(var(--border));
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: hsl(var(--orange-accent));
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: hsl(var(--muted-foreground));
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: hsl(var(--foreground));
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, hsl(var(--orange-accent)), hsl(var(--yellow-accent)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: hsl(var(--orange-accent));
+            color: hsl(var(--primary-foreground));
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 135, 31, 0.3);
+        }
+
+        /* Transparent Cards Section */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: hsl(var(--foreground));
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                hsl(var(--orange-accent)), 
+                hsl(var(--yellow-accent)), 
+                hsl(var(--green-accent)));
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: hsl(var(--foreground));
+        }
+
+        .card p {
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 1.5rem;
+        }
+
+        .card-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: hsl(var(--orange-accent));
+        }
+
+        /* Menu Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card:nth-child(1) .category-icon { color: hsl(var(--orange-accent)); }
+        .category-card:nth-child(2) .category-icon { color: hsl(var(--green-accent)); }
+        .category-card:nth-child(3) .category-icon { color: hsl(var(--yellow-accent)); }
+        .category-card:nth-child(4) .category-icon { color: hsl(var(--red-accent)); }
+
+        /* Featured Dishes Grid */
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .dish-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .dish-content {
+            padding: 1.5rem;
+        }
+
+        .dish-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: hsl(var(--foreground));
+        }
+
+        .dish-description {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .dish-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: hsl(var(--orange-accent));
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3rem 0 2rem;
+            border-top: 1px solid hsl(var(--border));
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: hsl(var(--orange-accent));
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: hsl(var(--muted-foreground));
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: hsl(var(--foreground));
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid hsl(var(--border));
+            color: hsl(var(--muted-foreground));
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .cards-grid,
+            .categories,
+            .dishes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">🍽️ Savory Delights</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>Savory Delights</h1>
+                <p>Experience culinary excellence with our handcrafted dishes made from the finest ingredients. Every bite tells a story of passion and perfection.</p>
+                <a href="#menu" class="cta-button">
+                    <i class="fas fa-utensils"></i>
+                    Explore Menu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Categories -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Our Specialties</h2>
+            <div class="categories">
+                <div class="category-card scroll-reveal">
+                    <div class="category-icon">🍕</div>
+                    <h3>Artisan Pizzas</h3>
+                    <p>Wood-fired pizzas with premium toppings and authentic Italian flavors</p>
+                </div>
+                <div class="category-card scroll-reveal">
+                    <div class="category-icon">🥗</div>
+                    <h3>Fresh Salads</h3>
+                    <p>Garden-fresh ingredients with house-made dressings and organic produce</p>
+                </div>
+                <div class="category-card scroll-reveal">
+                    <div class="category-icon">🍝</div>
+                    <h3>Pasta Classics</h3>
+                    <p>Traditional and modern pasta dishes with rich, flavorful sauces</p>
+                </div>
+                <div class="category-card scroll-reveal">
+                    <div class="category-icon">🥩</div>
+                    <h3>Grilled Perfection</h3>
+                    <p>Premium cuts of meat grilled to perfection with signature seasonings</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Dishes -->
+    <section id="menu" class="section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Featured Dishes</h2>
+            <div class="dishes-grid">
+                <div class="dish-card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Margherita Pizza" class="dish-image">
+                    <div class="dish-content">
+                        <h3 class="dish-title">Margherita Pizza</h3>
+                        <p class="dish-description">Classic Italian pizza with fresh mozzarella, basil, and tomato sauce on wood-fired crust</p>
+                        <div class="dish-price">$18.99</div>
+                    </div>
+                </div>
+                <div class="dish-card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Truffle Pasta" class="dish-image">
+                    <div class="dish-content">
+                        <h3 class="dish-title">Truffle Pasta</h3>
+                        <p class="dish-description">Handmade fettuccine with black truffle, parmesan, and wild mushrooms in cream sauce</p>
+                        <div class="dish-price">$32.99</div>
+                    </div>
+                </div>
+                <div class="dish-card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Grilled Salmon" class="dish-image">
+                    <div class="dish-content">
+                        <h3 class="dish-title">Grilled Salmon</h3>
+                        <p class="dish-description">Atlantic salmon grilled to perfection with lemon herb butter and seasonal vegetables</p>
+                        <div class="dish-price">$28.99</div>
+                    </div>
+                </div>
+                <div class="dish-card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Caesar Salad" class="dish-image">
+                    <div class="dish-content">
+                        <h3 class="dish-title">Caesar Salad</h3>
+                        <p class="dish-description">Crisp romaine lettuce with homemade croutons, parmesan, and our signature Caesar dressing</p>
+                        <div class="dish-price">$14.99</div>
+                    </div>
+                </div>
+                <div class="dish-card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ribeye Steak" class="dish-image">
+                    <div class="dish-content">
+                        <h3 class="dish-title">Ribeye Steak</h3>
+                        <p class="dish-description">Premium 12oz ribeye with garlic mashed potatoes and red wine reduction</p>
+                        <div class="dish-price">$45.99</div>
+                    </div>
+                </div>
+                <div class="dish-card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Chocolate Lava Cake" class="dish-image">
+                    <div class="dish-content">
+                        <h3 class="dish-title">Chocolate Lava Cake</h3>
+                        <p class="dish-description">Warm chocolate cake with molten center, served with vanilla ice cream and berry coulis</p>
+                        <div class="dish-price">$12.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Selection -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Chef's Premium Selection</h2>
+            <div class="cards-grid">
+                <div class="card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Lobster Thermidor" class="card-image">
+                    <h3>Lobster Thermidor</h3>
+                    <p>Fresh lobster tail with rich cream sauce, gruyere cheese, and herbs, served with buttered asparagus and roasted potatoes</p>
+                    <div class="card-price">$65.99</div>
+                </div>
+                <div class="card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1606728035253-49e8a23146de?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Wagyu Beef" class="card-image">
+                    <h3>Wagyu Beef Tenderloin</h3>
+                    <p>Premium A5 Wagyu beef with truffle risotto, sautéed mushrooms, and aged balsamic reduction</p>
+                    <div class="card-price">$89.99</div>
+                </div>
+                <div class="card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Seafood Platter" class="card-image">
+                    <h3>Seafood Platter Royal</h3>
+                    <p>Assorted fresh seafood including oysters, prawns, crab, and mussels with cocktail and garlic sauces</p>
+                    <div class="card-price">$75.99</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Savory Delights</h3>
+                    <p>Experience culinary excellence with our handcrafted dishes made from the finest ingredients.</p>
+                    <p>📍 123 Gourmet Street, Culinary District, NY 10001</p>
+                    <p>📞 (555) 123-FOOD</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Thursday: 11:00 AM - 10:00 PM</p>
+                    <p>Friday - Saturday: 11:00 AM - 11:00 PM</p>
+                    <p>Sunday: 12:00 PM - 9:00 PM</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#menu">Menu</a>
+                    <a href="#reservations">Reservations</a>
+                    <a href="#catering">Catering</a>
+                    <a href="#events">Private Events</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <a href="#">Instagram</a>
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">TikTok</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Savory Delights. All rights reserved. Crafted with passion for food lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll reveal elements
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.dish-card, .card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
